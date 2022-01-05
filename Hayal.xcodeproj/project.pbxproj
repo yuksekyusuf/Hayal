@@ -14,6 +14,7 @@
 		57D2C0AD278552D400F0FE2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2C0AC278552D400F0FE2D /* Assets.xcassets */; };
 		57D2C0B0278552D400F0FE2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57D2C0AE278552D400F0FE2D /* LaunchScreen.storyboard */; };
 		57D2C0B82785530700F0FE2D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0B72785530700F0FE2D /* HomeViewController.swift */; };
+		57D2C0BE27855F6700F0FE2D /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		57D2C0AF278552D400F0FE2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57D2C0B1278552D400F0FE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57D2C0B72785530700F0FE2D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			children = (
 				57D2C0A3278552D200F0FE2D /* AppDelegate.swift */,
 				57D2C0A5278552D200F0FE2D /* SceneDelegate.swift */,
+				57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */,
 				57D2C0A7278552D200F0FE2D /* ViewController.swift */,
 				57D2C0A9278552D200F0FE2D /* Main.storyboard */,
 				57D2C0AC278552D400F0FE2D /* Assets.xcassets */,
@@ -145,6 +148,7 @@
 				57D2C0A4278552D200F0FE2D /* AppDelegate.swift in Sources */,
 				57D2C0A6278552D200F0FE2D /* SceneDelegate.swift in Sources */,
 				57D2C0B82785530700F0FE2D /* HomeViewController.swift in Sources */,
+				57D2C0BE27855F6700F0FE2D /* ApiKeys.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
