@@ -1,13 +1,13 @@
 //
 //  HomeViewController.swift
-//  Hayal
+//  ImagEngine
 //
 //  Created by Ahmet Yusuf Yuksek on 1/4/22.
 //
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController{
 //MARK: - Properties
     
     private lazy var logoImageView: UIImageView = {
@@ -29,7 +29,7 @@ class HomeViewController: UIViewController {
     }
     
     private func configureUI() {
-        view.backgroundColor = .systemGray4
+        view.backgroundColor = .systemGray6
         navigationController?.navigationBar.tintColor = .blue
     }
     
@@ -48,6 +48,7 @@ class HomeViewController: UIViewController {
     
     private func configureTextField() {
         view.addSubview(searchTextField)
+        searchTextField.delegate = self
                 
         NSLayoutConstraint.activate([
             searchTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 78),
@@ -98,4 +99,11 @@ class HomeViewController: UIViewController {
     }
     
 
+}
+
+extension HomeViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        pushResultsViewController()
+        return true
+    }
 }

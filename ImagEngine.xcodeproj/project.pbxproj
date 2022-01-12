@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		5756ED6C278E49FB0030A8DC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5756ED6B278E49FB0030A8DC /* CustomTextField.swift */; };
 		5756ED6F278E4A7E0030A8DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5756ED6E278E4A7E0030A8DC /* CustomButton.swift */; };
+		57C0128C278E7A6900D6081E /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0128B278E7A6900D6081E /* PhotoData.swift */; };
+		57C0128E278E7B2000D6081E /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0128D278E7B2000D6081E /* Photo.swift */; };
+		57C01290278E7FF900D6081E /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0128F278E7FF900D6081E /* PhotoService.swift */; };
 		57D2C0A4278552D200F0FE2D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0A3278552D200F0FE2D /* AppDelegate.swift */; };
 		57D2C0A6278552D200F0FE2D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0A5278552D200F0FE2D /* SceneDelegate.swift */; };
 		57D2C0AD278552D400F0FE2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2C0AC278552D400F0FE2D /* Assets.xcassets */; };
@@ -22,7 +25,10 @@
 /* Begin PBXFileReference section */
 		5756ED6B278E49FB0030A8DC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5756ED6E278E4A7E0030A8DC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		57D2C0A0278552D200F0FE2D /* Hayal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hayal.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		57C0128B278E7A6900D6081E /* PhotoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoData.swift; sourceTree = "<group>"; };
+		57C0128D278E7B2000D6081E /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		57C0128F278E7FF900D6081E /* PhotoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		57D2C0A0278552D200F0FE2D /* ImagEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImagEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		57D2C0A3278552D200F0FE2D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		57D2C0A5278552D200F0FE2D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		57D2C0AC278552D400F0FE2D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -57,7 +63,7 @@
 		57D2C097278552D200F0FE2D = {
 			isa = PBXGroup;
 			children = (
-				57D2C0A2278552D200F0FE2D /* Hayal */,
+				57D2C0A2278552D200F0FE2D /* ImagEngine */,
 				57D2C0A1278552D200F0FE2D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -65,12 +71,12 @@
 		57D2C0A1278552D200F0FE2D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				57D2C0A0278552D200F0FE2D /* Hayal.app */,
+				57D2C0A0278552D200F0FE2D /* ImagEngine.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		57D2C0A2278552D200F0FE2D /* Hayal */ = {
+		57D2C0A2278552D200F0FE2D /* ImagEngine */ = {
 			isa = PBXGroup;
 			children = (
 				5756ED6D278E4A4F0030A8DC /* CustomViews */,
@@ -78,11 +84,14 @@
 				57D2C0A3278552D200F0FE2D /* AppDelegate.swift */,
 				57D2C0A5278552D200F0FE2D /* SceneDelegate.swift */,
 				57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */,
+				57C0128F278E7FF900D6081E /* PhotoService.swift */,
+				57C0128B278E7A6900D6081E /* PhotoData.swift */,
+				57C0128D278E7B2000D6081E /* Photo.swift */,
 				57D2C0AC278552D400F0FE2D /* Assets.xcassets */,
 				57D2C0AE278552D400F0FE2D /* LaunchScreen.storyboard */,
 				57D2C0B1278552D400F0FE2D /* Info.plist */,
 			);
-			path = Hayal;
+			path = ImagEngine;
 			sourceTree = "<group>";
 		};
 		57D8230D278E3D2D00963C63 /* ViewControllers */ = {
@@ -98,9 +107,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		57D2C09F278552D200F0FE2D /* Hayal */ = {
+		57D2C09F278552D200F0FE2D /* ImagEngine */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 57D2C0B4278552D400F0FE2D /* Build configuration list for PBXNativeTarget "Hayal" */;
+			buildConfigurationList = 57D2C0B4278552D400F0FE2D /* Build configuration list for PBXNativeTarget "ImagEngine" */;
 			buildPhases = (
 				57D2C09C278552D200F0FE2D /* Sources */,
 				57D2C09D278552D200F0FE2D /* Frameworks */,
@@ -110,9 +119,9 @@
 			);
 			dependencies = (
 			);
-			name = Hayal;
+			name = ImagEngine;
 			productName = Hayal;
-			productReference = 57D2C0A0278552D200F0FE2D /* Hayal.app */;
+			productReference = 57D2C0A0278552D200F0FE2D /* ImagEngine.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -130,7 +139,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 57D2C09B278552D200F0FE2D /* Build configuration list for PBXProject "Hayal" */;
+			buildConfigurationList = 57D2C09B278552D200F0FE2D /* Build configuration list for PBXProject "ImagEngine" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -143,7 +152,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				57D2C09F278552D200F0FE2D /* Hayal */,
+				57D2C09F278552D200F0FE2D /* ImagEngine */,
 			);
 		};
 /* End PBXProject section */
@@ -168,11 +177,14 @@
 				57D53EA0278E399300935D08 /* SearchViewController.swift in Sources */,
 				5756ED6C278E49FB0030A8DC /* CustomTextField.swift in Sources */,
 				57D2C0A4278552D200F0FE2D /* AppDelegate.swift in Sources */,
+				57C01290278E7FF900D6081E /* PhotoService.swift in Sources */,
 				57D2C0A6278552D200F0FE2D /* SceneDelegate.swift in Sources */,
 				5756ED6F278E4A7E0030A8DC /* CustomButton.swift in Sources */,
+				57C0128C278E7A6900D6081E /* PhotoData.swift in Sources */,
 				57D2C0B82785530700F0FE2D /* HomeViewController.swift in Sources */,
 				57D8230B278E3B2500963C63 /* FavoritesViewController.swift in Sources */,
 				57D2C0BE27855F6700F0FE2D /* ApiKeys.swift in Sources */,
+				57C0128E278E7B2000D6081E /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,7 +327,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62739J54F9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Hayal/Info.plist;
+				INFOPLIST_FILE = ImagEngine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -326,7 +338,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuksekyusuf.Hayal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuksekyusuf.ImagEngine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -343,7 +355,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 62739J54F9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Hayal/Info.plist;
+				INFOPLIST_FILE = ImagEngine/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -354,7 +366,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.yuksekyusuf.Hayal;
+				PRODUCT_BUNDLE_IDENTIFIER = com.yuksekyusuf.ImagEngine;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -365,7 +377,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		57D2C09B278552D200F0FE2D /* Build configuration list for PBXProject "Hayal" */ = {
+		57D2C09B278552D200F0FE2D /* Build configuration list for PBXProject "ImagEngine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				57D2C0B2278552D400F0FE2D /* Debug */,
@@ -374,7 +386,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		57D2C0B4278552D400F0FE2D /* Build configuration list for PBXNativeTarget "Hayal" */ = {
+		57D2C0B4278552D400F0FE2D /* Build configuration list for PBXNativeTarget "ImagEngine" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				57D2C0B5278552D400F0FE2D /* Debug */,

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Cash App.png",
+      "filename" : "Cameras.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Cash App@2x.png",
+      "filename" : "Cameras@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Cash App@3x.png",
+      "filename" : "Cameras@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

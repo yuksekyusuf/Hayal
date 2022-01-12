@@ -1,6 +1,6 @@
 //
 //  CustomButton.swift
-//  Hayal
+//  ImagEngine
 //
 //  Created by Ahmet Yusuf Yuksek on 1/11/22.
 //
@@ -28,7 +28,7 @@ class CustomButton: UIButton {
     
     private func configure() {
         layer.cornerRadius = 10
-        setTitleColor(.white, for: .normal)
+        setTitleColor(.systemGray6, for: .normal)
         titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
         translatesAutoresizingMaskIntoConstraints = false
     }

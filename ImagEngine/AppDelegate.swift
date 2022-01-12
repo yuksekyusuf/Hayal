@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  Hayal
+//  ImagEngine
 //
 //  Created by Ahmet Yusuf Yuksek on 1/4/22.
 //

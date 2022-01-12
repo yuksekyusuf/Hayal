@@ -1,24 +1,18 @@
 //
-//  SearchViewController.swift
-//  Hayal
+//  FavoritesViewController.swift
+//  ImagEngine
 //
 //  Created by Ahmet Yusuf Yuksek on 1/11/22.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController {
+class FavoritesViewController: UIViewController {
 
-    
-    var searchTerm: String!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
-          
-        
+        view.backgroundColor = .blue
     }
     
 
