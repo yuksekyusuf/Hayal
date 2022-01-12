@@ -30,6 +30,7 @@ class SearchViewController: UIViewController {
                 print("\(photosData.photos.photo[0])")
             case .failure(let error):
                 print("\(error)")
+                print("example")
             }
         }
     }
