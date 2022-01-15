@@ -17,7 +17,7 @@
 		57D2C0AD278552D400F0FE2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57D2C0AC278552D400F0FE2D /* Assets.xcassets */; };
 		57D2C0B0278552D400F0FE2D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57D2C0AE278552D400F0FE2D /* LaunchScreen.storyboard */; };
 		57D2C0B82785530700F0FE2D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0B72785530700F0FE2D /* HomeViewController.swift */; };
-		57D2C0BE27855F6700F0FE2D /* ApiKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */; };
+		57D2C0BE27855F6700F0FE2D /* Enpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D2C0BD27855F6700F0FE2D /* Enpoint.swift */; };
 		57D53EA0278E399300935D08 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D53E9F278E399300935D08 /* SearchViewController.swift */; };
 		57D8230B278E3B2500963C63 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57D8230A278E3B2500963C63 /* FavoritesViewController.swift */; };
 /* End PBXBuildFile section */
@@ -35,7 +35,7 @@
 		57D2C0AF278552D400F0FE2D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57D2C0B1278552D400F0FE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		57D2C0B72785530700F0FE2D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiKeys.swift; sourceTree = "<group>"; };
+		57D2C0BD27855F6700F0FE2D /* Enpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enpoint.swift; sourceTree = "<group>"; };
 		57D53E9F278E399300935D08 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		57D8230A278E3B2500963C63 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,7 +83,7 @@
 				57D8230D278E3D2D00963C63 /* ViewControllers */,
 				57D2C0A3278552D200F0FE2D /* AppDelegate.swift */,
 				57D2C0A5278552D200F0FE2D /* SceneDelegate.swift */,
-				57D2C0BD27855F6700F0FE2D /* ApiKeys.swift */,
+				57D2C0BD27855F6700F0FE2D /* Enpoint.swift */,
 				57C0128F278E7FF900D6081E /* PhotoService.swift */,
 				57C0128B278E7A6900D6081E /* PhotoData.swift */,
 				57C0128D278E7B2000D6081E /* Photo.swift */,
@@ -183,7 +183,7 @@
 				57C0128C278E7A6900D6081E /* PhotoData.swift in Sources */,
 				57D2C0B82785530700F0FE2D /* HomeViewController.swift in Sources */,
 				57D8230B278E3B2500963C63 /* FavoritesViewController.swift in Sources */,
-				57D2C0BE27855F6700F0FE2D /* ApiKeys.swift in Sources */,
+				57D2C0BE27855F6700F0FE2D /* Enpoint.swift in Sources */,
 				57C0128E278E7B2000D6081E /* Photo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

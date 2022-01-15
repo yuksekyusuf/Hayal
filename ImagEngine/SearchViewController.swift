@@ -16,8 +16,8 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .red
-          
+        configureUI()
+        getPhotos()
         
     }
     
@@ -33,6 +33,10 @@ class SearchViewController: UIViewController {
                 print("example")
             }
         }
+    }
+    
+    private func configureUI() {
+        view.backgroundColor = .red
     }
     
 
