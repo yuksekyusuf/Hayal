@@ -55,26 +55,26 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     //MARK: - Scene build helpers
     
-    private func searchNavigationController() -> UINavigationController {
-        let viewController = SearchViewController()
-        viewController.title = "Search"
-        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
-        return UINavigationController(rootViewController: viewController)
-    }
-    
-    private func favoritesNavigationController() -> UINavigationController {
-        let viewController = FavoritesViewController()
-        viewController.title = "Favorites"
-        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
-        return UINavigationController(rootViewController: viewController)
-    }
-
-    private func createTabBar() -> UITabBarController {
-        let tabbar = UITabBarController()
-        UITabBar.appearance().tintColor = .white
-        tabbar.viewControllers = [searchNavigationController(), favoritesNavigationController()]
-        return tabbar
-    }
+//    private func searchNavigationController() -> UINavigationController {
+//        let viewController = SearchViewController()
+//        viewController.title = "Search"
+//        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+//        return UINavigationController(rootViewController: viewController)
+//    }
+//    
+//    private func favoritesNavigationController() -> UINavigationController {
+//        let viewController = FavoritesViewController()
+//        viewController.title = "Favorites"
+//        viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .favorites, tag: 1)
+//        return UINavigationController(rootViewController: viewController)
+//    }
+//
+//    private func createTabBar() -> UITabBarController {
+//        let tabbar = UITabBarController()
+//        UITabBar.appearance().tintColor = .white
+//        tabbar.viewControllers = [searchNavigationController(), favoritesNavigationController()]
+//        return tabbar
+//    }
     
 
 }

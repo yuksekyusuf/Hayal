@@ -77,8 +77,11 @@ class HomeViewController: UIViewController{
     }
     
     private func searchNavigationController() -> UINavigationController {
-        let viewController = SearchViewController()
-        viewController.searchTerm = searchTextField.text
+        let service = PhotoService()
+        let interactor  = PhotosInteractor(service: service)
+        let viewController = SearchViewController(interactor: interactor)
+        interactor.viewController = viewController
+        viewController.tag = searchTextField.text
         viewController.title = searchTextField.text
         viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         return UINavigationController(rootViewController: viewController)

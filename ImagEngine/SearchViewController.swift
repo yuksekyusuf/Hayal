@@ -7,47 +7,82 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
+protocol SearchViewControlling: AnyObject {
+    func updateData(on photos: [Photo])
+}
 
+class SearchViewController: UIViewController, SearchViewControlling {
     
-    var searchTerm: String!
+    var tag: String!
+    var page = 1
+    var collectionView: UICollectionView!
+    enum Section { case main }
+    var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
+    
+    
+    var interactor: PhotosInteractor
+    init(interactor: PhotosInteractor) {
+        self.interactor = interactor
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureUI()
-        getPhotos()
+        interactor.getPhotos(tag: tag, page: page)
+        configureCollectionView()
+        configureDataSource()
         
     }
     
-    
-    private func getPhotos() {
-        PhotoService.shared.getPhotos { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case .success(let photosData):
-                print("\(photosData.photos.photo[0])")
-            case .failure(let error):
-                print("\(error)")
-                print("example")
-            }
-        }
-    }
-    
+   //MARK: - UIConfiguration
     private func configureUI() {
-        view.backgroundColor = .red
+        view.backgroundColor = .systemBackground
+        navigationController?.navigationBar.tintColor = .systemYellow
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    
+    //MARK: - Configure CollectionView
+    
+    private func configureCollectionView() {
+        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: UIFlowLayoutHelper.createThreeColumnLayout(in: view))
+        view.addSubview(collectionView)
+        collectionView.backgroundColor = .systemBackground
+        collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
     }
-    */
+    
+    
+    //MARK: - Data Source
+    
+    private func configureDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<Section, Photo>(
+            collectionView: collectionView, cellProvider: { (collectionView, indexPath, photo) -> UICollectionViewCell? in
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell else {
+                    fatalError("DequeueReusableCell failed while casting")
+                }
+                cell.interactor = self.interactor
+                cell.setCell(photo: photo)
+                return cell
+            }
+        )
+    }
+    
+    func updateData(on photos: [Photo]) {
+        var snapShot = NSDiffableDataSourceSnapshot<Section, Photo>()
+        snapShot.appendSections([.main])
+        snapShot.appendItems(photos)
+        self.dataSource.apply(snapShot, animatingDifferences: true)
+    }
+    
+//    func reloadData() {
+//        collectionView.reloadData()
+//    }
+
 
 }
