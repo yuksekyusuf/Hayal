@@ -29,10 +29,9 @@ class PhotosInteractor: PhotosInteracting {
     }
     
     func getPhotos(tag: String, page: Int) {
-        let delayInMilliSeconds: Int = 400
+        let delayInMilliSeconds: Int = 200
         var preWorkItem = workItem
         workItem?.cancel()
-        
         var myWorkItem: DispatchWorkItem?
         myWorkItem = DispatchWorkItem { [weak self] in
             guard let self = self else { return }
@@ -54,7 +53,6 @@ class PhotosInteractor: PhotosInteracting {
         }
         
         self.workItem = myWorkItem
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayInMilliSeconds), execute: workItem!)
     }
     
