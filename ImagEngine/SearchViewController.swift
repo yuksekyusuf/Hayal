@@ -12,10 +12,10 @@ protocol SearchViewControlling: AnyObject {
 }
 
 class SearchViewController: UIViewController, SearchViewControlling {
-    
     var tag: String!
     var page = 1
     var collectionView: UICollectionView!
+    var isSearching: Bool = false
     enum Section { case main }
     var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
     
@@ -34,10 +34,9 @@ class SearchViewController: UIViewController, SearchViewControlling {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
-        interactor.getPhotos(tag: tag, page: page)
         configureCollectionView()
         configureDataSource()
-        
+        configureSearchBar()
     }
     
    //MARK: - UIConfiguration
@@ -47,6 +46,13 @@ class SearchViewController: UIViewController, SearchViewControlling {
         navigationItem.hidesSearchBarWhenScrolling = false
     }
     
+    private func configureSearchBar() {
+        let searchController = UISearchController()
+        searchController.searchResultsUpdater = self
+        searchController.searchBar.delegate = self
+        searchController.searchBar.placeholder = "Search for  an Image"
+        navigationItem.searchController = searchController
+    }
     
     //MARK: - Configure CollectionView
     
@@ -80,9 +86,28 @@ class SearchViewController: UIViewController, SearchViewControlling {
         self.dataSource.apply(snapShot, animatingDifferences: true)
     }
     
-//    func reloadData() {
-//        collectionView.reloadData()
-//    }
+    func reloadData() {
+        collectionView.reloadData()
+    }
+    
+}
 
+//MARK: - SearchBar Delegate
 
+extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
+    
+   
+    func updateSearchResults(for searchController: UISearchController) {
+        
+        guard let tag = searchController.searchBar.text else { return }
+        if tag.isEmpty {
+            return
+        }
+        interactor.getPhotos(tag: tag, page: 1)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        interactor.cancelButtonTapped()
+    }
+    
 }
