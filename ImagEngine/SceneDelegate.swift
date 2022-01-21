@@ -56,7 +56,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func searchNavigationController() -> UINavigationController {
         
         let service = PhotoService()
-        let interactor  = PhotosInteractor(service: service)
+        let imageService = ImageService()
+        let interactor  = PhotosInteractor(service: service, imageService: imageService)
         let viewController = SearchViewController(interactor: interactor)
         interactor.viewController = viewController
         viewController.title = "Search"

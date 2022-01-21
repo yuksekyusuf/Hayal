@@ -17,19 +17,20 @@ protocol PhotosInteracting: AnyObject {
 class PhotosInteractor: PhotosInteracting {
     
     
-    let cache = NSCache<NSString, UIImage>()
     let service: PhotoServicing
+    let imageService: ImageService
     var photos = [Photo]()
     var isSearching: Bool = false
     weak var viewController: SearchViewControlling?
     var workItem: DispatchWorkItem?
     
-    init(service: PhotoServicing) {
+    init(service: PhotoServicing, imageService: ImageService) {
         self.service = service
+        self.imageService = imageService
     }
     
     func getPhotos(tag: String, page: Int) {
-        let delayInMilliSeconds: Int = 200
+        let delayInMilliSeconds: Int = 1
         var preWorkItem = workItem
         workItem?.cancel()
         var myWorkItem: DispatchWorkItem?
@@ -51,7 +52,6 @@ class PhotosInteractor: PhotosInteracting {
                 }
             }
         }
-        
         self.workItem = myWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayInMilliSeconds), execute: workItem!)
     }
@@ -60,12 +60,20 @@ class PhotosInteractor: PhotosInteracting {
     
     func setCell(photo: Photo, photoImage: UIImageView) {
         let url = "https://live.staticflickr.com/"+"\(photo.server)/" + "\(photo.id)" + "_\(photo.secret)_q.jpg"
-        service.downloadImage(from: url) { [weak self] image in
+        imageService.downloadImage(from: url) { [weak self] data in
             guard let self = self else { return }
-            DispatchQueue.main.async {
-                photoImage.image = image
-            }
+            guard let image = UIImage(data: data) else { return }
+            photoImage.image = image
+                    
         }
+        
+        
+//        imageservice.downloadImage(from: url) { [weak self] image in
+//            guard let self = self else { return }
+//            DispatchQueue.main.async {
+//                photoImage.image = image
+//            }
+//        }
     }
     
     

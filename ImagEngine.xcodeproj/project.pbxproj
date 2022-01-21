@@ -11,6 +11,8 @@
 		57287CD52797853700FFF9E7 /* UIFlowLayoutHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57287CD42797853700FFF9E7 /* UIFlowLayoutHelper.swift */; };
 		57287CD72797872000FFF9E7 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57287CD62797872000FFF9E7 /* PhotoCell.swift */; };
 		57287CD9279787C200FFF9E7 /* PhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57287CD8279787C200FFF9E7 /* PhotoImageView.swift */; };
+		5737BAC4279A5AA900F7A39D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5737BAC3279A5AA900F7A39D /* ImageCache.swift */; };
+		5737BAC6279A5D3C00F7A39D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5737BAC5279A5D3C00F7A39D /* ImageService.swift */; };
 		5756ED6C278E49FB0030A8DC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5756ED6B278E49FB0030A8DC /* CustomTextField.swift */; };
 		5756ED6F278E4A7E0030A8DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5756ED6E278E4A7E0030A8DC /* CustomButton.swift */; };
 		57C0128C278E7A6900D6081E /* PhotoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57C0128B278E7A6900D6081E /* PhotoData.swift */; };
@@ -30,6 +32,8 @@
 		57287CD42797853700FFF9E7 /* UIFlowLayoutHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFlowLayoutHelper.swift; sourceTree = "<group>"; };
 		57287CD62797872000FFF9E7 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 		57287CD8279787C200FFF9E7 /* PhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageView.swift; sourceTree = "<group>"; };
+		5737BAC3279A5AA900F7A39D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		5737BAC5279A5D3C00F7A39D /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		5756ED6B278E49FB0030A8DC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5756ED6E278E4A7E0030A8DC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		57C0128B278E7A6900D6081E /* PhotoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoData.swift; sourceTree = "<group>"; };
@@ -60,6 +64,7 @@
 		57287CCD279771B000FFF9E7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				5737BAC2279A5A9A00F7A39D /* Cache */,
 				57287CCF279771CD00FFF9E7 /* Entity */,
 				57287CCE279771B800FFF9E7 /* Service */,
 			);
@@ -70,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				57C0128F278E7FF900D6081E /* PhotoService.swift */,
+				5737BAC5279A5D3C00F7A39D /* ImageService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -97,6 +103,14 @@
 				57287CD42797853700FFF9E7 /* UIFlowLayoutHelper.swift */,
 			);
 			name = Helpers;
+			sourceTree = "<group>";
+		};
+		5737BAC2279A5A9A00F7A39D /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				5737BAC3279A5AA900F7A39D /* ImageCache.swift */,
+			);
+			name = Cache;
 			sourceTree = "<group>";
 		};
 		5756ED6D278E4A4F0030A8DC /* CustomViews */ = {
@@ -223,6 +237,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5737BAC4279A5AA900F7A39D /* ImageCache.swift in Sources */,
+				5737BAC6279A5D3C00F7A39D /* ImageService.swift in Sources */,
 				57D53EA0278E399300935D08 /* SearchViewController.swift in Sources */,
 				5756ED6C278E49FB0030A8DC /* CustomTextField.swift in Sources */,
 				57287CD2279779BE00FFF9E7 /* PhotosInteractor.swift in Sources */,
