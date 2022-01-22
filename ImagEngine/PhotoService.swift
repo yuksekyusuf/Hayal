@@ -16,7 +16,7 @@ class PhotoService: PhotoServicing {
 //
 //    static let shared = PhotoService()
     
-    let cache = NSCache<NSString, UIImage>()
+//    let cache = NSCache<NSString, UIImage>()
     
     private let baseUrl = "https://api.flickr.com/services/rest/?format=json&method=flickr.photos.search&api_key="
     

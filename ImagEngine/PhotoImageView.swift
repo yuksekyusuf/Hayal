@@ -12,7 +12,7 @@ class PhotoImageView: UIImageView {
     
     let placeholderImage = UIImage(named: "ImagEngine")
     let service = PhotoService()
-    let cache = NSCache<NSString, UIImage>()
+//    let cache = NSCache<NSString, UIImage>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
