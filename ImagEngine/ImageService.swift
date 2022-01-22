@@ -16,9 +16,11 @@ class ImageService {
         let cacheKey = NSString(string: url)
         guard let url = URL(string: url) else { return }
         
-        if let data = cache.get(key: cacheKey as String) {
+        do {
+            let data = try filesManager.read(fileNamed: "images")
             completion(data)
-            return
+        } catch {
+            
         }
         if cache.cacheDictionary.capacity == 100 {
             guard let key = cache.cacheDictionary.first?.key else { return }
