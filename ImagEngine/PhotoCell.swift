@@ -17,6 +17,29 @@ class PhotoCell: UICollectionViewCell {
     var photoImage = PhotoImageView(frame: .zero)
     var interactor: PhotosInteractor!
     
+    lazy var checkImage: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(systemName: "checkmark.circle")
+        iv.tintColor = .systemBlue
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    lazy var highlightIndicator: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(checkImage)
+        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+        let padding: CGFloat = 8
+        NSLayoutConstraint.activate([
+            checkImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
+            checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            checkImage.heightAnchor.constraint(equalToConstant: 30),
+            checkImage.widthAnchor.constraint(equalToConstant: 30)
+        ])
+        return view
+    }()
 
     
     override init(frame: CGRect) {
@@ -46,5 +69,17 @@ class PhotoCell: UICollectionViewCell {
             photoImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
             photoImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             photoImage.heightAnchor.constraint(equalTo: photoImage.widthAnchor)])
+        
+        
+        self.bringSubviewToFront(highlightIndicator)
+        
+//        addSubview(highlightIndicator)
+//        NSLayoutConstraint.activate([
+//            highlightIndicator.bottomAnchor.constraint(equalTo: bottomAnchor),
+//            highlightIndicator.topAnchor.constraint(equalTo: topAnchor),
+//            highlightIndicator.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            highlightIndicator.trailingAnchor.constraint(equalTo: trailingAnchor)
+//        ])
+        
     }
 }

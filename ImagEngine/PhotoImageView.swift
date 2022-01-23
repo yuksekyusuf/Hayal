@@ -14,6 +14,30 @@ class PhotoImageView: UIImageView {
     let service = PhotoService()
 //    let cache = NSCache<NSString, UIImage>()
     
+//    lazy var checkImage: UIImageView = {
+//        let iv = UIImageView()
+//        iv.image = UIImage(systemName: "checkmark.circle")
+//        iv.tintColor = .systemBlue
+//        iv.clipsToBounds = true
+//        iv.translatesAutoresizingMaskIntoConstraints = false
+//        return iv
+//    }()
+//
+//    lazy var highlightIndicator: UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.addSubview(checkImage)
+//        view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
+//        let padding: CGFloat = 8
+//        NSLayoutConstraint.activate([
+//            checkImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
+//            checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+//            checkImage.heightAnchor.constraint(equalToConstant: 30),
+//            checkImage.widthAnchor.constraint(equalToConstant: 30)
+//        ])
+//        return view
+//    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configure()
@@ -23,6 +47,7 @@ class PhotoImageView: UIImageView {
         fatalError("init(coder:) has not been implemented")
     }
     private func configure() {
+       
         layer.cornerRadius = 10
         clipsToBounds = true
         contentMode = .scaleAspectFit

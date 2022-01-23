@@ -14,11 +14,38 @@ protocol SearchViewControlling: AnyObject {
 class SearchViewController: UIViewController, SearchViewControlling {
     var tag: String!
     var page = 1
-    var collectionView: UICollectionView!
     var isSearching: Bool = false
     enum Section { case main }
     var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
+    var collectionView: UICollectionView!
     
+    lazy var addButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        return button
+    }()
+    
+    lazy var selectButton: UIBarButtonItem = {
+        let button = UIBarButtonItem(title: "Select", style: .plain, target: self, action: #selector(selectButtonTapped))
+        return button
+    }()
+    
+    enum Mode {
+        case view
+        case select
+    }
+    
+    var mMode: Mode = .view {
+        didSet {
+            switch mMode {
+            case .view:
+                selectButton.title = "Select"
+                collectionView.allowsMultipleSelection = false
+            case .select:
+                selectButton.title = "Cancel"
+                collectionView.allowsMultipleSelection = true
+            }
+        }
+    }
     
     var interactor: PhotosInteractor
     init(interactor: PhotosInteractor) {
@@ -37,6 +64,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
         configureCollectionView()
         configureDataSource()
         configureSearchBar()
+        configureUI()
     }
     
    //MARK: - UIConfiguration
@@ -44,6 +72,13 @@ class SearchViewController: UIViewController, SearchViewControlling {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.tintColor = .systemYellow
         navigationItem.hidesSearchBarWhenScrolling = false
+        
+        
+        navigationItem.rightBarButtonItem = addButton
+        
+        
+        navigationItem.leftBarButtonItem = selectButton
+        
     }
     
     private func configureSearchBar() {
@@ -54,6 +89,14 @@ class SearchViewController: UIViewController, SearchViewControlling {
         navigationItem.searchController = searchController
     }
     
+    @objc private func addButtonTapped() {
+        
+    }
+    
+    @objc private func selectButtonTapped() {
+        mMode = mMode == .view ? .select : .view
+    }
+    
     //MARK: - Configure CollectionView
     
     private func configureCollectionView() {
@@ -61,6 +104,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
+        collectionView.allowsMultipleSelection = true
     }
     
     

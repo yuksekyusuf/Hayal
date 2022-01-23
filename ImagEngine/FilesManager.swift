@@ -36,7 +36,7 @@ class FilesManager {
         }
     }
     
-    func read(fileNamed:String) throws -> Data {
+    func read(fileNamed: String) throws -> Data {
         guard let url = makeURL(forFileNamed: fileNamed) else {
             throw Error.invalidDirectory
         }
