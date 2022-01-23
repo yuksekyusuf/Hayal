@@ -41,8 +41,6 @@ class ImageService {
                 
                 DispatchQueue.main.async {
                     completion(data)
-                    print(self.cache.cacheDictionary)
-                    print(self.cache.cacheDictionary.capacity)
                 }
             }
             task.resume()

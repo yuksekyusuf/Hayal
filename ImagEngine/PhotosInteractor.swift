@@ -12,6 +12,7 @@ protocol PhotosInteracting: AnyObject {
     func getPhotos(tag: String, page: Int)
     var photos: [Photo] { get }
     var isSearching: Bool { get set }
+    func cellTapped(on indexPath: IndexPath) -> UIViewController
 }
 
 class PhotosInteractor: PhotosInteracting {
@@ -79,7 +80,13 @@ class PhotosInteractor: PhotosInteracting {
     
     func cancelButtonTapped() {
         isSearching = false
-        self.viewController?.updateData(on: photos)
+//        self.viewController?.updateData(on: photos)
+    }
+    
+    func cellTapped(on indexPath: IndexPath) -> UIViewController {
+        let photo = photos[indexPath.row]
+        let viewController = FavoritesViewController()
+        return viewController
     }
     
     

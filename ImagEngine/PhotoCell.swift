@@ -28,6 +28,7 @@ class PhotoCell: UICollectionViewCell {
     
     lazy var highlightIndicator: UIView = {
         let view = UIView()
+        view.frame = view.bounds
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         view.layer.cornerRadius = 10
@@ -74,7 +75,7 @@ class PhotoCell: UICollectionViewCell {
         
         highlightIndicator.isHidden = true
         checkImage.isHidden = true
-        
+//
         let padding: CGFloat = 2
         
         NSLayoutConstraint.activate([

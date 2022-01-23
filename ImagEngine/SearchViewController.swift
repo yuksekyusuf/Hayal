@@ -18,7 +18,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
     enum Section { case main }
     var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
     var collectionView: UICollectionView!
-    var selectedIndexPath: [IndexPath : Bool] = [:]
+    var selectedIndexPath: [IndexPath: Bool] = [:]
     
     lazy var addButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -107,6 +107,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
+        collectionView.delegate = self
     }
     
     
@@ -118,6 +119,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell else {
                     fatalError("DequeueReusableCell failed while casting")
                 }
+                print(indexPath.row)
                 cell.interactor = self.interactor
                 cell.setCell(photo: photo)
                 return cell
@@ -130,10 +132,6 @@ class SearchViewController: UIViewController, SearchViewControlling {
         snapShot.appendSections([.main])
         snapShot.appendItems(photos)
         self.dataSource.apply(snapShot, animatingDifferences: true)
-    }
-    
-    func reloadData() {
-        collectionView.reloadData()
     }
     
 }
@@ -153,25 +151,33 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        interactor.cancelButtonTapped()
+//        interactor.cancelButtonTapped()
     }
     
 }
 
+
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
         switch mMode {
         case .view:
             collectionView.deselectItem(at: indexPath, animated: true)
-            //perform something
+//            let vc = interactor.cellTapped(on: indexPath)
+//            let nav = UINavigationController(rootViewController: vc)
+//            nav.modalPresentationStyle = .popover
+//            present(nav, animated: true)
+//            perform something
         case .select:
             selectedIndexPath[indexPath] = true
+            print("DEBUG Select: \(indexPath)")
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if mMode == .select {
             selectedIndexPath[indexPath] = false
+            print("DEBUG Deselect: \(indexPath)")
         }
     }
 }
