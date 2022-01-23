@@ -29,15 +29,9 @@ class PhotoCell: UICollectionViewCell {
     lazy var highlightIndicator: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(checkImage)
         view.backgroundColor = UIColor.white.withAlphaComponent(0.5)
-        let padding: CGFloat = 8
-        NSLayoutConstraint.activate([
-            checkImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
-            checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            checkImage.heightAnchor.constraint(equalToConstant: 30),
-            checkImage.widthAnchor.constraint(equalToConstant: 30)
-        ])
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
         return view
     }()
 
@@ -46,6 +40,19 @@ class PhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         configure()
         
+    }
+    override var isHighlighted: Bool {
+        didSet {
+            highlightIndicator.isHidden = !isHighlighted
+        }
+    }
+    
+    override var isSelected: Bool {
+        didSet {
+            highlightIndicator.isHidden = !isSelected
+            checkImage.isHidden = !isSelected
+            
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -62,6 +69,12 @@ class PhotoCell: UICollectionViewCell {
     private func configure() {
 
         addSubview(photoImage)
+        addSubview(highlightIndicator)
+        addSubview(checkImage)
+        
+        highlightIndicator.isHidden = true
+        checkImage.isHidden = true
+        
         let padding: CGFloat = 2
         
         NSLayoutConstraint.activate([
@@ -70,16 +83,18 @@ class PhotoCell: UICollectionViewCell {
             photoImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             photoImage.heightAnchor.constraint(equalTo: photoImage.widthAnchor)])
         
+        NSLayoutConstraint.activate([
+            highlightIndicator.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            highlightIndicator.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            highlightIndicator.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            highlightIndicator.heightAnchor.constraint(equalTo: highlightIndicator.widthAnchor)])
         
-        self.bringSubviewToFront(highlightIndicator)
         
-//        addSubview(highlightIndicator)
-//        NSLayoutConstraint.activate([
-//            highlightIndicator.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            highlightIndicator.topAnchor.constraint(equalTo: topAnchor),
-//            highlightIndicator.leadingAnchor.constraint(equalTo: leadingAnchor),
-//            highlightIndicator.trailingAnchor.constraint(equalTo: trailingAnchor)
-//        ])
-        
+        NSLayoutConstraint.activate([
+            checkImage.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            checkImage.heightAnchor.constraint(equalToConstant: 30),
+            checkImage.widthAnchor.constraint(equalToConstant: 30)
+        ])
     }
 }

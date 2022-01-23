@@ -18,6 +18,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
     enum Section { case main }
     var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
     var collectionView: UICollectionView!
+    var selectedIndexPath: [IndexPath : Bool] = [:]
     
     lazy var addButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -38,6 +39,12 @@ class SearchViewController: UIViewController, SearchViewControlling {
         didSet {
             switch mMode {
             case .view:
+                for (key, value) in selectedIndexPath {
+                    if value {
+                        collectionView.deselectItem(at: key, animated: true)
+                    }
+                }
+                selectedIndexPath.removeAll()
                 selectButton.title = "Select"
                 collectionView.allowsMultipleSelection = false
             case .select:
@@ -72,11 +79,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
         view.backgroundColor = .systemBackground
         navigationController?.navigationBar.tintColor = .systemYellow
         navigationItem.hidesSearchBarWhenScrolling = false
-        
-        
         navigationItem.rightBarButtonItem = addButton
-        
-        
         navigationItem.leftBarButtonItem = selectButton
         
     }
@@ -90,7 +93,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
     }
     
     @objc private func addButtonTapped() {
-        
+        //perform something
     }
     
     @objc private func selectButtonTapped() {
@@ -104,7 +107,6 @@ class SearchViewController: UIViewController, SearchViewControlling {
         view.addSubview(collectionView)
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
-        collectionView.allowsMultipleSelection = true
     }
     
     
@@ -154,4 +156,22 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         interactor.cancelButtonTapped()
     }
     
+}
+
+extension SearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch mMode {
+        case .view:
+            collectionView.deselectItem(at: indexPath, animated: true)
+            //perform something
+        case .select:
+            selectedIndexPath[indexPath] = true
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if mMode == .select {
+            selectedIndexPath[indexPath] = false
+        }
+    }
 }
