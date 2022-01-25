@@ -8,6 +8,11 @@
 import Foundation
 
 struct Photo: Codable, Hashable {
+    
+    let uuid = UUID()
+    
+    private enum CodingKeys: String, CodingKey {case id, owner, secret, server, farm, title, ispublic, isfriend, isfamily }
+    
     let id: String
     let owner: String
     let secret: String
@@ -17,4 +22,13 @@ struct Photo: Codable, Hashable {
     let ispublic: Int
     let isfriend: Int
     let isfamily: Int
+}
+
+extension Photo {
+    static func ==(lhs: Photo, rhs: Photo) -> Bool {
+        return lhs.uuid == rhs.uuid
+    }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(uuid)
+    }
 }

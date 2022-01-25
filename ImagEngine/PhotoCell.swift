@@ -16,6 +16,7 @@ class PhotoCell: UICollectionViewCell {
     static let reuseID = "PhotoCell"
     var photoImage = PhotoImageView(frame: .zero)
     var interactor: PhotosInteractor!
+    let imageService = ImageService()
     
     lazy var checkImage: UIImageView = {
         let iv = UIImageView()

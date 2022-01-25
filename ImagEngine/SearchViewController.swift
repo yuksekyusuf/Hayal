@@ -9,11 +9,13 @@ import UIKit
 
 protocol SearchViewControlling: AnyObject {
     func updateData(on photos: [Photo])
+    var searchTag: String! { get }
 }
 
 class SearchViewController: UIViewController, SearchViewControlling {
-    var tag: String!
+    var searchTag: String!
     var page = 1
+    var hasMorePhotos = true
     var isSearching: Bool = false
     enum Section { case main }
     var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
@@ -132,8 +134,8 @@ class SearchViewController: UIViewController, SearchViewControlling {
         snapShot.appendSections([.main])
         snapShot.appendItems(photos)
         self.dataSource.apply(snapShot, animatingDifferences: true)
+        
     }
-    
 }
 
 //MARK: - SearchBar Delegate
@@ -144,6 +146,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let tag = searchController.searchBar.text else { return }
+        searchTag = tag
         if tag.isEmpty {
             return
         }
@@ -179,5 +182,10 @@ extension SearchViewController: UICollectionViewDelegate {
             selectedIndexPath[indexPath] = false
             print("DEBUG Deselect: \(indexPath)")
         }
+    }
+    
+    //MARK: - Configure Pagination
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        interactor.scrollDown(scrollView)
     }
 }
