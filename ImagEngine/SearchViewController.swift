@@ -20,7 +20,9 @@ class SearchViewController: UIViewController, SearchViewControlling {
     enum Section { case main }
     var dataSource: UICollectionViewDiffableDataSource<Section, Photo>!
     var collectionView: UICollectionView!
-    var selectedIndexPath: [IndexPath: Bool] = [:]
+    var dictionarySelectedIndexPath = [IndexPath: Bool]()
+    var arraySelectedIndexPaths = [Int]()
+    var selectedPhotos = [Photo]()
     
     lazy var addButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -41,12 +43,12 @@ class SearchViewController: UIViewController, SearchViewControlling {
         didSet {
             switch mMode {
             case .view:
-                for (key, value) in selectedIndexPath {
+                for (key, value) in dictionarySelectedIndexPath {
                     if value {
                         collectionView.deselectItem(at: key, animated: true)
                     }
                 }
-                selectedIndexPath.removeAll()
+                dictionarySelectedIndexPath.removeAll()
                 selectButton.title = "Select"
                 collectionView.allowsMultipleSelection = false
             case .select:
@@ -95,11 +97,19 @@ class SearchViewController: UIViewController, SearchViewControlling {
     }
     
     @objc private func addButtonTapped() {
-        //perform something
+        for (key, value) in dictionarySelectedIndexPath {
+            if value {
+                arraySelectedIndexPaths.append(key.row)
+            }
+        }
+        let photos = interactor.selectPhotos(for: arraySelectedIndexPaths)
+        print(photos)
     }
     
     @objc private func selectButtonTapped() {
         mMode = mMode == .view ? .select : .view
+//        selectedPhotos = photos[selectedIndexPath]
+        
     }
     
     //MARK: - Configure CollectionView
@@ -172,15 +182,13 @@ extension SearchViewController: UICollectionViewDelegate {
 //            present(nav, animated: true)
 //            perform something
         case .select:
-            selectedIndexPath[indexPath] = true
-            print("DEBUG Select: \(indexPath)")
+            dictionarySelectedIndexPath[indexPath] = true
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         if mMode == .select {
-            selectedIndexPath[indexPath] = false
-            print("DEBUG Deselect: \(indexPath)")
+            dictionarySelectedIndexPath[indexPath] = false
         }
     }
     

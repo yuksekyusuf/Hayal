@@ -13,6 +13,7 @@ protocol PhotosInteracting: AnyObject {
     var photos: [Photo] { get }
     var isSearching: Bool { get set }
     var hasMorePhotos: Bool { get set }
+    var selectedPhotos: Set<Photo> { get }
     func cellTapped(on indexPath: IndexPath) -> UIViewController
     func scrollDown(_ scrollView: UIScrollView)
 }
@@ -28,6 +29,7 @@ class PhotosInteractor: PhotosInteracting {
     var page: Int = 1
     weak var viewController: SearchViewControlling?
     var workItem: DispatchWorkItem?
+    var selectedPhotos = Set<Photo>()
     
     init(service: PhotoServicing, imageService: ImageService) {
         self.service = service
@@ -62,6 +64,14 @@ class PhotosInteractor: PhotosInteracting {
         }
         self.workItem = myWorkItem
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayInMilliSeconds), execute: workItem!)
+    }
+    
+    func selectPhotos(for indexPath: [Int]) -> Set<Photo> {
+        for item in indexPath {
+            let photo = photos[item]
+            selectedPhotos.insert(photo)
+        }
+        return selectedPhotos
     }
     
     

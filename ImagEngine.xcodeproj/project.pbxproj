@@ -13,6 +13,7 @@
 		57287CD9279787C200FFF9E7 /* PhotoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 57287CD8279787C200FFF9E7 /* PhotoImageView.swift */; };
 		5737BAC4279A5AA900F7A39D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5737BAC3279A5AA900F7A39D /* ImageCache.swift */; };
 		5737BAC6279A5D3C00F7A39D /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5737BAC5279A5D3C00F7A39D /* ImageService.swift */; };
+		574B8D2D27A24A250045F89A /* SearchSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 574B8D2C27A24A250045F89A /* SearchSection.swift */; };
 		5756ED6C278E49FB0030A8DC /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5756ED6B278E49FB0030A8DC /* CustomTextField.swift */; };
 		5756ED6F278E4A7E0030A8DC /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5756ED6E278E4A7E0030A8DC /* CustomButton.swift */; };
 		579D9519279BB93E00641CA9 /* FilesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579D9518279BB93E00641CA9 /* FilesManager.swift */; };
@@ -35,6 +36,7 @@
 		57287CD8279787C200FFF9E7 /* PhotoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoImageView.swift; sourceTree = "<group>"; };
 		5737BAC3279A5AA900F7A39D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		5737BAC5279A5D3C00F7A39D /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		574B8D2C27A24A250045F89A /* SearchSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchSection.swift; sourceTree = "<group>"; };
 		5756ED6B278E49FB0030A8DC /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5756ED6E278E4A7E0030A8DC /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		579D9518279BB93E00641CA9 /* FilesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilesManager.swift; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 			children = (
 				57C0128B278E7A6900D6081E /* PhotoData.swift */,
 				57C0128D278E7B2000D6081E /* Photo.swift */,
+				574B8D2C27A24A250045F89A /* SearchSection.swift */,
 			);
 			name = Entity;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				5737BAC6279A5D3C00F7A39D /* ImageService.swift in Sources */,
 				57D53EA0278E399300935D08 /* SearchViewController.swift in Sources */,
 				5756ED6C278E49FB0030A8DC /* CustomTextField.swift in Sources */,
+				574B8D2D27A24A250045F89A /* SearchSection.swift in Sources */,
 				57287CD2279779BE00FFF9E7 /* PhotosInteractor.swift in Sources */,
 				57287CD9279787C200FFF9E7 /* PhotoImageView.swift in Sources */,
 				57D2C0A4278552D200F0FE2D /* AppDelegate.swift in Sources */,
