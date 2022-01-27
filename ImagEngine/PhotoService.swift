@@ -24,7 +24,7 @@ class PhotoService: PhotoServicing {
         let key = "5379a3eda00bd01a30d2c95543a55e77"
         let endpoint = baseUrl + "\(key)" + "&tags=%27+\(tag)+%27" + "&nojsoncallback=\(page)"
         guard let url = URL(string: endpoint) else { return }
-        
+        print("DEBUG url: ", url)
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if error != nil {
                 completion(.failure(error as! Error))

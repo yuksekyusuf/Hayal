@@ -13,6 +13,7 @@ protocol SearchViewControlling: AnyObject {
 }
 
 class SearchViewController: UIViewController, SearchViewControlling {
+    
     var searchTag: String!
     var page = 1
     var hasMorePhotos = true
@@ -77,6 +78,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
         configureSearchBar()
         configureUI()
     }
+
     
    //MARK: - UIConfiguration
     private func configureUI() {
@@ -152,8 +154,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
         var snapShot = NSDiffableDataSourceSnapshot<Section, Photo>()
         snapShot.appendSections([.main])
         snapShot.appendItems(photos)
-        self.dataSource.apply(snapShot, animatingDifferences: true)
-        
+        self.dataSource.applySnapshotUsingReloadData(snapShot)
     }
 }
 
@@ -164,17 +165,21 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
    
     func updateSearchResults(for searchController: UISearchController) {
         
-        guard let tag = searchController.searchBar.text else { return }
+        guard let tag = searchController.searchBar.text, !tag.isEmpty else { return }
         searchTag = tag
-        if tag.isEmpty {
-            return
-        }
         interactor.getPhotos(tag: tag, page: 1)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 //        interactor.cancelButtonTapped()
     }
+    
+//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+//        guard let tag = searchBar.text else { return }
+//        searchTag = tag
+//        interactor.getPhotos(tag: tag, page: 1)
+//
+//    }
     
 }
 

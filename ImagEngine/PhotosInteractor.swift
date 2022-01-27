@@ -48,7 +48,6 @@ class PhotosInteractor: PhotosInteracting {
                     switch result {
                     case .success(let photosData):
                         let fetchPhotos = photosData.photos.photo
-                        print("total photos: ", fetchPhotos.count)
                         if fetchPhotos.count < 100 { self.hasMorePhotos = false }
                         self.photos.append(contentsOf: fetchPhotos)
                         self.viewController?.updateData(on: self.photos)
@@ -77,7 +76,7 @@ class PhotosInteractor: PhotosInteracting {
     
     
     func setCell(photo: Photo, photoImage: UIImageView) {
-        let url = "https://live.staticflickr.com/"+"\(photo.server)/" + "\(photo.id)" + "_\(photo.secret)_q.jpg"
+        let url = photo.url
         let cache = imageService.cache
         if let data = cache.get(key: url) {
             photoImage.image = UIImage(data: data)
@@ -115,6 +114,7 @@ class PhotosInteractor: PhotosInteracting {
             guard let searchTag = viewController?.searchTag else { return }
             print(searchTag, page)
             self.getPhotos(tag: searchTag, page: page)
+            print("DEBUG page", page)
         }
     }
 }
