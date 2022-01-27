@@ -22,6 +22,10 @@ struct Photo: Codable, Hashable {
     let ispublic: Int
     let isfriend: Int
     let isfamily: Int
+    var url: String {
+        "https://live.staticflickr.com/"+"\(self.server)/" + "\(self.id)" + "_\(self.secret)_q.jpg"
+    }
+    
 }
 
 extension Photo {

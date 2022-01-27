@@ -103,7 +103,16 @@ class SearchViewController: UIViewController, SearchViewControlling {
             }
         }
         let photos = interactor.selectPhotos(for: arraySelectedIndexPaths)
-        print(photos)
+        PersistanceManager.updateWith(favorites: photos, actionType: .add) { error in
+            print(error?.localizedDescription)
+            
+        }
+        let alert = UIAlertController(title: "Success!", message: "You successfully favorited these photos", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+        return
+        
+
     }
     
     @objc private func selectButtonTapped() {
