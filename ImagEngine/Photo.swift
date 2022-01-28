@@ -10,9 +10,7 @@ import Foundation
 struct Photo: Codable, Hashable {
     
     let uuid = UUID()
-    
-    private enum CodingKeys: String, CodingKey {case id, owner, secret, server, farm, title, ispublic, isfriend, isfamily }
-    
+    private enum CodingKeys: String, CodingKey {case id, owner, secret, server, farm, title, ispublic, isfriend, isfamily}
     let id: String
     let owner: String
     let secret: String
@@ -22,9 +20,9 @@ struct Photo: Codable, Hashable {
     let ispublic: Int
     let isfriend: Int
     let isfamily: Int
-    var url: String {
-        "https://live.staticflickr.com/"+"\(self.server)/" + "\(self.id)" + "_\(self.secret)_q.jpg"
-    }
+//    var url: String {
+//        "https://live.staticflickr.com/"+"\(self.server)/" + "\(self.id)" + "_\(self.secret)_q.jpg"
+//    }
     
 }
 
@@ -33,6 +31,6 @@ extension Photo {
         return lhs.uuid == rhs.uuid
     }
     func hash(into hasher: inout Hasher) {
-        hasher.combine(uuid)
+        hasher.combine(self.uuid)
     }
 }

@@ -9,7 +9,8 @@ import UIKit
 
 protocol SearchViewControlling: AnyObject {
     func updateData(on photos: [Photo])
-    var searchTag: String! { get }
+    var hasMorePhotos: Bool { get set }
+    var page: Int { get set }
 }
 
 class SearchViewController: UIViewController, SearchViewControlling {
@@ -105,14 +106,23 @@ class SearchViewController: UIViewController, SearchViewControlling {
             }
         }
         let photos = interactor.selectPhotos(for: arraySelectedIndexPaths)
-        PersistanceManager.updateWith(favorites: photos, actionType: .add) { error in
-            print(error?.localizedDescription)
-            
+        
+        for photo in photos {
+            let photo = Photo(id: photo.id, owner: photo.owner, secret: photo.secret, server: photo.server, farm: photo.farm, title: photo.title, ispublic: photo.ispublic, isfriend: photo.isfriend, isfamily: photo.isfamily)
+            PersistanceManager.updateWith(favorite: photo, actionType: .add) { [weak self] error in
+                guard let self = self else { return }
+                guard let error = error else {
+                    let alert = UIAlertController(title: "Success!", message: "You successfully favorited these photos", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                    return }
+                
+                let alert = UIAlertController(title: "Something went wrong!", message: error.rawValue, preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+    
+            }
         }
-        let alert = UIAlertController(title: "Success!", message: "You successfully favorited these photos", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-        return
         
 
     }
@@ -154,8 +164,13 @@ class SearchViewController: UIViewController, SearchViewControlling {
         var snapShot = NSDiffableDataSourceSnapshot<Section, Photo>()
         snapShot.appendSections([.main])
         snapShot.appendItems(photos)
+        print("DEBUG: snapshot", snapShot.numberOfItems)
         self.dataSource.applySnapshotUsingReloadData(snapShot)
     }
+    
+    
+    
+    
 }
 
 //MARK: - SearchBar Delegate
@@ -167,7 +182,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
         
         guard let tag = searchController.searchBar.text, !tag.isEmpty else { return }
         searchTag = tag
-        interactor.getPhotos(tag: tag, page: 1)
+        interactor.getPhotos(tag: tag, page: page)
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
@@ -208,6 +223,15 @@ extension SearchViewController: UICollectionViewDelegate {
     
     //MARK: - Configure Pagination
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        interactor.scrollDown(scrollView)
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let height = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - height {
+            guard hasMorePhotos else { return }
+            self.page += 1
+            print("DEBUG: ", searchTag, page)
+            interactor.getPhotos(tag: searchTag, page: page)
+        }
     }
 }
