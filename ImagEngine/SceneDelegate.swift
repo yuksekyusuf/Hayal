@@ -19,7 +19,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = createTabBar()
+        let nav = UINavigationController()
+        nav.viewControllers = [HomeViewController()]
+        nav.isNavigationBarHidden = true
+        window?.rootViewController = nav
         window?.makeKeyAndVisible()
     }
 
@@ -54,7 +57,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     //MARK: - Scene build helpers
     
     private func searchNavigationController() -> UINavigationController {
-        
         let service = PhotoService()
         let imageService = ImageService()
         let interactor  = PhotosInteractor(service: service, imageService: imageService)

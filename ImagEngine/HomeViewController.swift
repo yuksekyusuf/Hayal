@@ -17,14 +17,14 @@ class HomeViewController: UIViewController{
     }()
     
     private let searchTextField = CustomTextField()
-    private lazy var searchButton = CustomButton(backgroundColor: .systemYellow, title: "Get Images")
+    private lazy var searchButton = CustomButton(backgroundColor: .systemYellow, title: "Let's find some images")
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureUI()
         configureLogoImageView()
-        configureTextField()
+//        configureTextField()
         configureButton()
     }
     
@@ -40,32 +40,32 @@ class HomeViewController: UIViewController{
         NSLayoutConstraint.activate([
             logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 80),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            logoImageView.heightAnchor.constraint(equalToConstant: 200),
-            logoImageView.widthAnchor.constraint(equalToConstant: 200)
+            logoImageView.heightAnchor.constraint(equalToConstant: 250),
+            logoImageView.widthAnchor.constraint(equalToConstant: 250)
             
         ])
     }
     
-    private func configureTextField() {
-        view.addSubview(searchTextField)
-        searchTextField.delegate = self
-                
-        NSLayoutConstraint.activate([
-            searchTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 78),
-            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
-            searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            searchTextField.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
+//    private func configureTextField() {
+//        view.addSubview(searchTextField)
+//        searchTextField.delegate = self
+//
+//        NSLayoutConstraint.activate([
+//            searchTextField.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 78),
+//            searchTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+//            searchTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
+//            searchTextField.heightAnchor.constraint(equalToConstant: 50)
+//        ])
+//    }
     
     private func configureButton() {
         view.addSubview(searchButton)
         searchButton.addTarget(self, action: #selector(pushResultsViewController), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
-            searchButton.bottomAnchor.constraint(equalTo:view.safeAreaLayoutGuide.bottomAnchor, constant: -50),
-            searchButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 125),
-            searchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -125),
+            searchButton.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 150),
+            searchButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 65),
+            searchButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -65),
             searchButton.heightAnchor.constraint(equalToConstant: 50)
         ])
         
@@ -82,8 +82,7 @@ class HomeViewController: UIViewController{
         let interactor  = PhotosInteractor(service: service, imageService: imageService)
         let viewController = SearchViewController(interactor: interactor)
         interactor.viewController = viewController
-        viewController.searchTag = searchTextField.text
-        viewController.title = searchTextField.text
+        viewController.title = "Search"
         viewController.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
         return UINavigationController(rootViewController: viewController)
     }
@@ -105,9 +104,9 @@ class HomeViewController: UIViewController{
 
 }
 
-extension HomeViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        pushResultsViewController()
-        return true
-    }
-}
+//extension HomeViewController: UITextFieldDelegate {
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        pushResultsViewController()
+//        return true
+//    }
+//}

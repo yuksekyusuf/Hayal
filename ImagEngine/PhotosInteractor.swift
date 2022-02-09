@@ -13,7 +13,7 @@ protocol PhotosInteracting: AnyObject {
     var photos: [Photo] { get set }
     var isSearching: Bool { get set }
 //    var hasMorePhotos: Bool { get set }
-    var selectedPhotos: Set<Photo> { get }
+    var selectedPhotos: [Photo] { get set }
     func cellTapped(on indexPath: IndexPath) -> UIViewController
 //    func scrollDown(_ scrollView: UIScrollView)
 }
@@ -28,7 +28,7 @@ class PhotosInteractor: PhotosInteracting {
 //    var page: Int = 1
     weak var viewController: SearchViewControlling?
     var workItem: DispatchWorkItem?
-    var selectedPhotos = Set<Photo>()
+    var selectedPhotos = [Photo]()
     
     init(service: PhotoServicing, imageService: ImageService) {
         self.service = service
@@ -48,7 +48,7 @@ class PhotosInteractor: PhotosInteracting {
                     case .success(let photosData):
                         let fetchPhotos = photosData.photos.photo
                         if fetchPhotos.count < 100 { self.viewController?.hasMorePhotos = false }
-                        self.photos += fetchPhotos
+                        self.photos = fetchPhotos
                         self.viewController?.updateData(on: self.photos)
                         if self.photos.isEmpty {
                             let message = "This endpoint had no data. Try another keyword please!!!"
@@ -64,10 +64,10 @@ class PhotosInteractor: PhotosInteracting {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(delayInMilliSeconds), execute: workItem!)
     }
     
-    func selectPhotos(for indexPath: [Int]) -> Set<Photo> {
+    func selectPhotos(for indexPath: [Int]) -> [Photo] {
         for item in indexPath {
             let photo = photos[item]
-            selectedPhotos.insert(photo)
+            selectedPhotos.append(photo)
         }
         return selectedPhotos
     }
@@ -75,7 +75,7 @@ class PhotosInteractor: PhotosInteracting {
     
     
     func setCell(photo: Photo, photoImage: UIImageView) {
-        let url = "https://live.staticflickr.com/"+"\(photo.server)/" + "\(photo.id)" + "_\(photo.secret)_q.jpg"
+        let url = photo.url
         let cache = imageService.cache
         if let data = cache.get(key: url) {
             photoImage.image = UIImage(data: data)

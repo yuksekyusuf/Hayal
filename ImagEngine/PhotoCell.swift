@@ -15,7 +15,7 @@ class PhotoCell: UICollectionViewCell {
     
     static let reuseID = "PhotoCell"
     var photoImage = PhotoImageView(frame: .zero)
-    var interactor: PhotosInteractor!
+    var interactor: PhotosInteractor?
     let imageService = ImageService()
     
     lazy var checkImage: UIImageView = {
@@ -62,7 +62,22 @@ class PhotoCell: UICollectionViewCell {
     }
     
     func setCell(photo: Photo) {
-        interactor.setCell(photo: photo, photoImage: photoImage)
+        interactor?.setCell(photo: photo, photoImage: photoImage)
+    }
+    
+    func setCell(justPhoto: Photo) {
+        let url = justPhoto.url
+        let cache = imageService.cache
+        if let data = cache.get(key: url) {
+            photoImage.image = UIImage(data: data)
+        } else {
+            imageService.downloadImage(from: url) { [weak self] data in
+                guard let self = self else { return }
+                guard let image = UIImage(data: data) else { return }
+                self.photoImage.image = image
+            }
+        }
+        
     }
     
 

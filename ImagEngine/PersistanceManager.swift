@@ -18,25 +18,23 @@ enum PersistanceManager {
     
     static private let defaults = UserDefaults.standard
     
-    static func updateWith(favorite: Photo, actionType: PersistanceActionType, completion: @escaping (CustomError?) -> Void) {
-        
-        retriveFavorites { result in
+    static func updateWith(saves: [Photo], actionType: PersistanceActionType, completion: @escaping (CustomError?) -> Void) {
+
+        retriveSaves { result in
             switch result {
             case .success(let favorites):
+                var retriveSaves = favorites
                 
-                var retriveFavorites = favorites
-                switch actionType {
-                case .add:
-                    guard !retriveFavorites.contains(favorite) else {
+                for photo in saves {
+                    let photo = Photo(id: photo.id, owner: photo.owner, secret: photo.secret, server: photo.server, farm: photo.farm, title: photo.title, ispublic: photo.ispublic, isfriend: photo.isfriend, isfamily: photo.isfamily)
+                    guard !retriveSaves.contains(photo) else {
                         completion(.alreadyInFavorite)
                         return
                     }
-                    retriveFavorites.append(favorite)
-                case .remove:
-                    retriveFavorites.removeAll { $0.id == favorite.id }
+                    
+                    retriveSaves.append(photo)
+                    completion(save(favorites: retriveSaves))
                 }
-                
-                completion(save(favorites: retriveFavorites))
             case .failure(let error):
                 completion(error)
             }
@@ -44,7 +42,7 @@ enum PersistanceManager {
     }
     
     
-    static func retriveFavorites(completion: @escaping(Result<[Photo], CustomError>) -> Void) {
+    static func retriveSaves(completion: @escaping(Result<[Photo], CustomError>) -> Void) {
         guard let favoritesData = defaults.object(forKey: Keys.favorites) as? Data else {
             completion(.success([]))
             return

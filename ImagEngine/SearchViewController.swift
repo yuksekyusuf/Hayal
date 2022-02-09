@@ -25,6 +25,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
     var dictionarySelectedIndexPath = [IndexPath: Bool]()
     var arraySelectedIndexPaths = [Int]()
     var selectedPhotos = [Photo]()
+    let searchController = UISearchController()
     
     lazy var addButton: UIBarButtonItem = {
         let button = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
@@ -92,38 +93,37 @@ class SearchViewController: UIViewController, SearchViewControlling {
     }
     
     private func configureSearchBar() {
-        let searchController = UISearchController()
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.searchBar.placeholder = "Search for  an Image"
         navigationItem.searchController = searchController
+        
     }
     
     @objc private func addButtonTapped() {
         for (key, value) in dictionarySelectedIndexPath {
             if value {
                 arraySelectedIndexPaths.append(key.row)
+                print("DEBUG indeces", arraySelectedIndexPaths)
             }
         }
         let photos = interactor.selectPhotos(for: arraySelectedIndexPaths)
-        
-        for photo in photos {
-            let photo = Photo(id: photo.id, owner: photo.owner, secret: photo.secret, server: photo.server, farm: photo.farm, title: photo.title, ispublic: photo.ispublic, isfriend: photo.isfriend, isfamily: photo.isfamily)
-            PersistanceManager.updateWith(favorite: photo, actionType: .add) { [weak self] error in
-                guard let self = self else { return }
-                guard let error = error else {
-                    let alert = UIAlertController(title: "Success!", message: "You successfully favorited these photos", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    return }
-                
-                let alert = UIAlertController(title: "Something went wrong!", message: error.rawValue, preferredStyle: UIAlertController.Style.alert)
+        print("DEBUG photos: ", photos.count)
+        PersistanceManager.updateWith(saves: photos, actionType: .add) { [weak self] error in
+            guard let self = self else { return }
+            guard let error = error else {
+                let alert = UIAlertController(title: "Success!", message: "Successfully saved!", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
-    
+                return
+                
             }
+            
+            let alert = UIAlertController(title: "Something went wrong!", message: error.rawValue, preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+
         }
-        
 
     }
     
@@ -176,28 +176,23 @@ class SearchViewController: UIViewController, SearchViewControlling {
 //MARK: - SearchBar Delegate
 
 extension SearchViewController: UISearchResultsUpdating, UISearchBarDelegate {
-    
-   
     func updateSearchResults(for searchController: UISearchController) {
         
         guard let tag = searchController.searchBar.text, !tag.isEmpty else { return }
         searchTag = tag
         interactor.getPhotos(tag: tag, page: page)
+        self.navigationItem.title = tag
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
 //        interactor.cancelButtonTapped()
     }
-    
-//    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//        guard let tag = searchBar.text else { return }
-//        searchTag = tag
-//        interactor.getPhotos(tag: tag, page: 1)
-//
-//    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+        searchController.isActive = false
+    }
     
 }
-
 
 extension SearchViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -222,6 +217,11 @@ extension SearchViewController: UICollectionViewDelegate {
     }
     
     //MARK: - Configure Pagination
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        searchController.searchBar.endEditing(true)
+        searchController.isActive = false
+    }
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -229,7 +229,7 @@ extension SearchViewController: UICollectionViewDelegate {
         
         if offsetY > contentHeight - height {
             guard hasMorePhotos else { return }
-            self.page += 1
+            page += 1
             print("DEBUG: ", searchTag, page)
             interactor.getPhotos(tag: searchTag, page: page)
         }
