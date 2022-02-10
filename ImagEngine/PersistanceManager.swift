@@ -18,46 +18,8 @@ enum PersistanceManager {
     
     static private let defaults = UserDefaults.standard
     
-    static func updateWith(saves: [Photo], actionType: PersistanceActionType, completion: @escaping (CustomError?) -> Void) {
-
-        retriveSaves { result in
-            switch result {
-            case .success(let favorites):
-                var retriveSaves = favorites
-                
-                for photo in saves {
-                    let photo = Photo(id: photo.id, owner: photo.owner, secret: photo.secret, server: photo.server, farm: photo.farm, title: photo.title, ispublic: photo.ispublic, isfriend: photo.isfriend, isfamily: photo.isfamily)
-                    guard !retriveSaves.contains(photo) else {
-                        completion(.alreadyInFavorite)
-                        return
-                    }
-                    
-                    retriveSaves.append(photo)
-                    completion(save(favorites: retriveSaves))
-                }
-            case .failure(let error):
-                completion(error)
-            }
-        }
-    }
     
-    
-    static func retriveSaves(completion: @escaping(Result<[Photo], CustomError>) -> Void) {
-        guard let favoritesData = defaults.object(forKey: Keys.favorites) as? Data else {
-            completion(.success([]))
-            return
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            let favorites = try decoder.decode([Photo].self, from: favoritesData)
-            completion(.success(favorites))
-        } catch {
-            completion(.failure(.unableToFavorite))
-        }
-    }
-    
-    static func save(favorites: [Photo]) -> CustomError? {
+    static func save(favorites: [SavedPhoto]) -> CustomError? {
         do {
             let encoder = JSONEncoder()
             let encodedFavorites = try encoder.encode(favorites)
@@ -65,6 +27,49 @@ enum PersistanceManager {
             return nil
         } catch {
             return .unableToFavorite
+        }
+    }
+    
+    static func read(completion: @escaping(Result<[SavedPhoto], CustomError>) -> Void) {
+        guard let savesData = defaults.object(forKey: Keys.favorites) as? Data else {
+            completion(.success([]))
+            return
+        }
+        do {
+            let decoder = JSONDecoder()
+            let saves = try decoder.decode([SavedPhoto].self, from: savesData)
+            completion(.success(saves))
+        } catch {
+            completion(.failure(.unableToFavorite))
+        }
+    }
+    
+    static func updateWith(saves: [Photo], for searchTag: String, actionType: PersistanceActionType, completion: @escaping (CustomError?) -> Void) {
+
+        read { result in
+            switch result {
+            case .success(let favorites):
+                var retrivedSaves = favorites
+                
+                for myPhoto in saves {
+                    let photo = SavedPhoto(searchTag: searchTag, url: myPhoto.url)
+                    switch actionType {
+                    case .add:
+                        guard !retrivedSaves.contains(photo) else {
+                            completion(.alreadyInFavorite)
+                            return
+                        }
+                        retrivedSaves.append(photo)
+                        completion(save(favorites: retrivedSaves))
+                    case .remove:
+                        retrivedSaves.removeAll { $0.url == photo.url }
+                    }
+                }
+            
+                
+            case .failure(let error):
+                completion(error)
+            }
         }
     }
 }

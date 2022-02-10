@@ -65,7 +65,7 @@ class PhotoCell: UICollectionViewCell {
         interactor?.setCell(photo: photo, photoImage: photoImage)
     }
     
-    func setCell(justPhoto: Photo) {
+    func setCell(justPhoto: SavedPhoto) {
         let url = justPhoto.url
         let cache = imageService.cache
         if let data = cache.get(key: url) {
@@ -79,9 +79,6 @@ class PhotoCell: UICollectionViewCell {
         }
         
     }
-    
-
-    
     
     private func configure() {
 
