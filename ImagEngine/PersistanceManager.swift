@@ -50,28 +50,17 @@ enum PersistanceManager {
             switch result {
             case .success(let favorites):
                 var retrivedSaves = favorites
-                
-                
                 for myPhoto in saves {
                     let photo = SavedPhoto(searchTag: searchTag, url: myPhoto.url)
                     switch actionType {
                     case .add:
-                        if !retrivedSaves.contains(photo) {
-                            retrivedSaves.append(photo)
-                        }
-                        completion(save(favorites: retrivedSaves))
+                        retrivedSaves.append(photo)
                     case .remove:
                         retrivedSaves.removeAll { $0.url == photo.url }
-                    
                     }
-//                let uniqueItems = retrivedSaves.uniques(by: \.id)
-                
-//                switch actionType {
-//                case .add:
-//
-//                case .remove:
-//
                 }
+                let unique = retrivedSaves.unique()
+                completion(save(favorites: unique))
 //
                 
             

@@ -13,7 +13,7 @@ protocol PhotosInteracting: AnyObject {
     var photos: [Photo] { get set }
     var isSearching: Bool { get set }
 //    var hasMorePhotos: Bool { get set }
-    var selectedPhotos: [Photo] { get set }
+//    var selectedPhotos: [Photo] { get set }
     func cellTapped(on indexPath: IndexPath) -> UIViewController
 //    func scrollDown(_ scrollView: UIScrollView)
 }
@@ -28,7 +28,7 @@ class PhotosInteractor: PhotosInteracting {
 //    var page: Int = 1
     weak var viewController: SearchViewControlling?
     var workItem: DispatchWorkItem?
-    var selectedPhotos = [Photo]()
+//    var selectedPhotos = [Photo]()
     
     init(service: PhotoServicing, imageService: ImageService) {
         self.service = service
@@ -50,7 +50,6 @@ class PhotosInteractor: PhotosInteracting {
                         if fetchPhotos.count < 100 { self.viewController?.hasMorePhotos = false }
                         self.photos = fetchPhotos
                         self.viewController?.updateData(on: self.photos)
-                        self.viewController?.resetPhotos(for: self.selectedPhotos)
                         if self.photos.isEmpty {
                             let message = "This endpoint had no data. Try another keyword please!!!"
                             print(message)
@@ -66,12 +65,12 @@ class PhotosInteractor: PhotosInteracting {
     }
     
     func selectPhotos(for indexPath: [Int]) -> [Photo] {
+        var photosSelected = [Photo]()
         for item in indexPath {
             let photo = photos[item]
-            selectedPhotos.append(photo)
+            photosSelected.append(photo)
         }
-        
-        return selectedPhotos
+        return photosSelected
     }
     
     

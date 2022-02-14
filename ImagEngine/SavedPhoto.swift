@@ -8,19 +8,7 @@
 import Foundation
 
 
-struct SavedPhoto: Codable, Hashable {
-    
-    let id = UUID()
-    private enum CodingKeys: String, CodingKey {case searchTag, url}
+struct SavedPhoto: Codable, Hashable  {
     let searchTag: String
     let url: String
-}
-
-extension SavedPhoto {
-    static func ==(lhs: SavedPhoto, rhs: SavedPhoto) -> Bool {
-        return lhs.id == rhs.id
-    }
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(self.id)
-    }
 }

@@ -10,6 +10,8 @@ import UIKit
 class FavoritesViewController: UICollectionViewController {
     
     var photos = [SavedPhoto]()
+    var groupedPhotos : [String: [SavedPhoto]] = [:]
+    
     
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -27,7 +29,6 @@ class FavoritesViewController: UICollectionViewController {
         super.viewWillAppear(animated)
         getSavedPhotos()
     }
-
     
     private func configureUI() {
         view.backgroundColor = .systemBackground
@@ -37,6 +38,7 @@ class FavoritesViewController: UICollectionViewController {
         
         collectionView.backgroundColor = .systemBackground
         collectionView.register(PhotoCell.self, forCellWithReuseIdentifier: PhotoCell.reuseID)
+        collectionView.register(CellHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "header")
         collectionView.delegate = self
         collectionView.dataSource = self
     }
@@ -58,20 +60,43 @@ class FavoritesViewController: UICollectionViewController {
                 print(error.localizedDescription)
             }
         }
+        groupedPhotos = Dictionary(grouping: photos, by: { $0.searchTag })
+        collectionView.reloadData()
     }
 }
 
 extension FavoritesViewController {
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+    override func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return groupedPhotos.keys.count
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return groupedPhotos[Array(groupedPhotos.keys)[section]]!.count
+    }
+    
+    
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let photos = groupedPhotos[Array(groupedPhotos.keys)[indexPath.section]]
+        let photo = photos![indexPath.row]
+        
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell else {
             fatalError("DequeueReusableCell failed while casting")
         }
-        cell.setCell(justPhoto: photos[indexPath.row])
+        cell.setCell(justPhoto: photos![indexPath.row])
         return cell
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "header", for: indexPath) as! CellHeader
+        let category = Array(groupedPhotos.keys)[indexPath.section]
+        header.label.text = category
+        return header
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 40)
     }
 
 }
@@ -90,4 +115,5 @@ extension FavoritesViewController: UICollectionViewDelegateFlowLayout {
         let itemWidth = availableWidth / 3
         return CGSize(width: itemWidth, height: itemWidth)
     }
+    
 }

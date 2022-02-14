@@ -113,13 +113,12 @@ class SearchViewController: UIViewController, SearchViewControlling {
                 print("DEBUG indeces", arraySelectedIndexPaths)
             }
         }
-        self.dictionarySelectedIndexPath.removeAll()
         let photos = interactor.selectPhotos(for: arraySelectedIndexPaths)
-        print("DEBUG photos: ", photos.count)
+        self.arraySelectedIndexPaths.removeAll()
         PersistanceManager.updateWith(saves: photos, for: self.searchTag.lowercased(), actionType: .add) { [weak self] error in
             guard let self = self else { return }
             guard let error = error else {
-                let alert = UIAlertController(title: "Success!", message: "Successfully saved!", preferredStyle: UIAlertController.Style.alert)
+                let alert = UIAlertController(title: "Success!", message: "Save is successful!", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 self.mMode = .view
