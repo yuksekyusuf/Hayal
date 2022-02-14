@@ -51,25 +51,33 @@ enum PersistanceManager {
             case .success(let favorites):
                 var retrivedSaves = favorites
                 
+                
                 for myPhoto in saves {
                     let photo = SavedPhoto(searchTag: searchTag, url: myPhoto.url)
                     switch actionType {
                     case .add:
-                        guard !retrivedSaves.contains(photo) else {
-                            completion(.alreadyInFavorite)
-                            return
+                        if !retrivedSaves.contains(photo) {
+                            retrivedSaves.append(photo)
                         }
-                        retrivedSaves.append(photo)
                         completion(save(favorites: retrivedSaves))
                     case .remove:
                         retrivedSaves.removeAll { $0.url == photo.url }
+                    
                     }
-                }
-            
+//                let uniqueItems = retrivedSaves.uniques(by: \.id)
                 
+//                switch actionType {
+//                case .add:
+//
+//                case .remove:
+//
+                }
+//
+                
+            
             case .failure(let error):
                 completion(error)
             }
-        }
     }
 }
+    }

@@ -10,6 +10,7 @@ import UIKit
 class FavoritesViewController: UICollectionViewController {
     
     var photos = [SavedPhoto]()
+    
     init() {
         super.init(collectionViewLayout: UICollectionViewFlowLayout())
     }
@@ -69,8 +70,6 @@ extension FavoritesViewController {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoCell.reuseID, for: indexPath) as? PhotoCell else {
             fatalError("DequeueReusableCell failed while casting")
         }
-        let photo = photos[indexPath.row]
-        print(photo.searchTag, photo.url)
         cell.setCell(justPhoto: photos[indexPath.row])
         return cell
     }

@@ -9,6 +9,7 @@ import UIKit
 
 protocol SearchViewControlling: AnyObject {
     func updateData(on photos: [Photo])
+    func resetPhotos(for selectedPhotos: [Photo]) 
     var hasMorePhotos: Bool { get set }
     var page: Int { get set }
 }
@@ -24,7 +25,12 @@ class SearchViewController: UIViewController, SearchViewControlling {
     var collectionView: UICollectionView!
     var dictionarySelectedIndexPath = [IndexPath: Bool]()
     var arraySelectedIndexPaths = [Int]()
-    var selectedPhotos = [Photo]()
+//    {
+//        didSet{
+//            arraySelectedIndexPaths.removeAll()
+//        }
+////    }
+//    var selectedPhotos = [Photo]()
     let searchController = UISearchController()
     
     lazy var addButton: UIBarButtonItem = {
@@ -107,6 +113,7 @@ class SearchViewController: UIViewController, SearchViewControlling {
                 print("DEBUG indeces", arraySelectedIndexPaths)
             }
         }
+        self.dictionarySelectedIndexPath.removeAll()
         let photos = interactor.selectPhotos(for: arraySelectedIndexPaths)
         print("DEBUG photos: ", photos.count)
         PersistanceManager.updateWith(saves: photos, for: self.searchTag.lowercased(), actionType: .add) { [weak self] error in
@@ -115,11 +122,8 @@ class SearchViewController: UIViewController, SearchViewControlling {
                 let alert = UIAlertController(title: "Success!", message: "Successfully saved!", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
-                self.arraySelectedIndexPaths.removeAll()
                 self.mMode = .view
-                self.searchTag = ""
                 return
-                
             }
             
             let alert = UIAlertController(title: "Something went wrong!", message: error.rawValue, preferredStyle: UIAlertController.Style.alert)
@@ -133,6 +137,11 @@ class SearchViewController: UIViewController, SearchViewControlling {
         mMode = mMode == .view ? .select : .view
 //        selectedPhotos = photos[selectedIndexPath]
         
+    }
+    
+    func resetPhotos(for selectedPhotos: [Photo]) {
+        var photos = selectedPhotos
+        return photos.removeAll()
     }
     
     //MARK: - Configure CollectionView
@@ -209,6 +218,7 @@ extension SearchViewController: UICollectionViewDelegate {
 //            perform something
         case .select:
             dictionarySelectedIndexPath[indexPath] = true
+            print(dictionarySelectedIndexPath)
         }
     }
 
