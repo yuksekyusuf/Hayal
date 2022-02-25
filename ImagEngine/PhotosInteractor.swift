@@ -46,9 +46,9 @@ class PhotosInteractor: PhotosInteracting {
                 if let workItem = myWorkItem, !workItem.isCancelled {
                     switch result {
                     case .success(let photosData):
-                        let fetchPhotos = photosData.photos.photo
-                        if fetchPhotos.count < 100 { self.viewController?.hasMorePhotos = false }
-                        self.photos = fetchPhotos
+                        let fetchedPhotos = photosData.photos.photo
+                        if fetchedPhotos.count < 100 { self.viewController?.hasMorePhotos = false }
+                        self.photos = fetchedPhotos
                         self.viewController?.updateData(on: self.photos)
                         if self.photos.isEmpty {
                             let message = "This endpoint had no data. Try another keyword please!!!"
